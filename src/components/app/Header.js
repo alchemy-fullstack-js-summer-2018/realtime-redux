@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import Error from './Error';
-import logo from '../../assets/logo.png';
+import logo from '../../assets/logo.svg';
 import styles from './Header.css';
 
 class Header extends Component {

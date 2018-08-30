@@ -9,6 +9,7 @@
 
     .logo {
       display: flex;
+      width: 250px;
       align-items: center;
     }
   
