@@ -7,9 +7,14 @@
     align-items: center;
     justify-content: space-between;
 
+    img {
+      width: 200px;
+      fill: white;
+    }
+
     .logo {
       display: flex;
-      width: 250px;
+      
       align-items: center;
     }
   
