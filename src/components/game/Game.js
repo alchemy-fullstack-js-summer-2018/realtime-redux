@@ -25,6 +25,7 @@ class Game extends Component {
   }
 
   render() { 
+    /* eslint-disable-next-line */
     const { game, user, move } = this.props;
     if(!game || !user) return null;
 
