@@ -10,17 +10,19 @@
     img {
       width: 200px;
       fill: white;
+      margin-right: 20px;
     }
 
     .logo {
       display: flex;
-      
       align-items: center;
     }
   
-    > h1 {
-      font-size: 14pt;
-      color: white;
+    h1 {
+      font-family: 'Londrina Solid', cursive;
+      font-weight: 900;
+      font-size: 3.5em;
+      color: rgb(255, 255, 255);
       text-shadow: 1px 1px 1px black;
     }
   }

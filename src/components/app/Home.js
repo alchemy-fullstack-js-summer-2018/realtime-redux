@@ -17,7 +17,7 @@ export class Home extends Component {
     const { user, games, requestGame } = this.props;
 
     return (
-      <div>
+      <div id="headline">
         <h2>Play Rock Paper Scissors in Real Time</h2>
         {user && <UserGames games={games} onRequest={requestGame}/>}
       </div>
