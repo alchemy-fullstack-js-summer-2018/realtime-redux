@@ -15,22 +15,62 @@ exports.playerQueue = functions.database.ref('/players/{uid}').onCreate((snapsho
       // Grab the current value of what was written to the Realtime Database.
       const { uid } = context.params;
 
-      return admin.database().ref('players').once('value')
+      return playersRef.once('value')
         .then(snapshot => {
           const [player] = Object.keys(snapshot.val())
             .filter(key => key !== uid);
 
-          if(!player) return null;// eslint-disable-line
+          if(!player) return null; // eslint-disable-line
+          
+          const newGameRef = gamesRef.push();
 
-          playersRef.child(uid).remove();
-          playersRef.child(player).remove();
-
-          const newGameRef = gamesRef.push({
-            player1: uid,
-            player2: player
-          });
-
-          userGamesRef.child(uid).child(newGameRef.key).set(true);
-          userGamesRef.child(player).child(newGameRef.key).set(true);
+          return Promise.all([
+            newGameRef.set({ player1: uid, player2: player }),
+            playersRef.child(uid).remove(),
+            playersRef.child(player).remove(),
+            userGamesRef.child(uid).child(newGameRef.key).set(true),
+            userGamesRef.child(player).child(newGameRef.key).set(true)
+          ]);
+          
         });
     });
+
+    exports.moveQueue = functions.database.ref('/moves/{gameKey}/{uid}').onCreate((snapshot, contex) => {
+      const { gameKey } = context.params;
+
+      const gamesMovesRef = snapshot.ref.parent;
+
+      gamesMovesRef.once('value')
+        .value(snapshot => {
+          const game = snapshot.val();
+          const moves = Object.keys(game)
+            .map(key => ({
+              uid: key,
+              play: game[key]
+            }));
+            if(move.length < 2) return null;
+
+            const roundRef = gamesMovesRef.child(gameKey).child('rounds').push();
+
+            return Promise.all([
+              gamesMovesRef.remove(),
+              roundRef.set({
+                moves,
+                winner: calculateWinner(moves)
+              })
+            ]);
+        });
+    });
+
+    const calculateWinner = ([move1, move2]) => {
+      if(isWinner(move1.play, move2.play)) return move1.uid;
+      if(isWinner(move2.play, move1.play)) return move2.uid;
+      return null;
+    };
+
+    const isWinner = (play1, play2) => {
+      if(play1 === 'SCISSORS' && play2 === 'PAPER') return true;
+      if(play1 === 'PAPER' && play2 === 'ROCK') return true;
+      if(play1 === 'ROCK' && play2 === 'SCISSORS') return true;
+      return false;
+    };

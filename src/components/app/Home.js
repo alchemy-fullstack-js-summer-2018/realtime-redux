@@ -13,28 +13,21 @@ class Home extends Component {
     requestGame: PropTypes.func.isRequired
   };
   render() { 
-    const { user, games,  requestGame } = this.props;
+    const { user, games, requestGame } = this.props;
 
     return (
       <div>
         <h2>Play for a 33.333333% chance of winning!</h2>
         { 
-          user && <section>
-            <button onClick={requestGame}>Duel</button>
-            <ul>
-              {games.map((gameKey, i) => (
-                <li key={gameKey}>
-                  <Link to={`/games/${gameKey}`}>Game {i + 1}</Link>
-                </li>
-              ))}
-            </ul>
-          </section>
+          user && <UserGames games={games} onRequest={requestGame}/>
+            
         }
       </div>
     );
   }
 }
- 
+
+
 export default connect(
   state => ({
     user: getUser(state),
@@ -42,3 +35,23 @@ export default connect(
   }),
   { requestGame }
 ) (Home);
+
+export const UserGames = ({ onRequest, games }) => {
+  return (
+    <section>
+      <button onClick={onRequest}>Duel</button>
+      <ul>
+        {games.map((gameKey, i) => (
+          <li key={gameKey}>
+            <Link to={`/games/${gameKey}`}>Game {i + 1}</Link>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+};
+
+UserGames.propTypes = {
+  games: PropTypes.array.isRequired,
+  onRequest: PropTypes.func.isRequired
+}
