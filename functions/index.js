@@ -5,6 +5,7 @@ admin.initializeApp(functions.config().firebase);
 const db = admin.database();
 const playersRef = db.ref('players');
 const gamesRef = db.ref('games');
+const movesRef = db.ref('moves');
 const userGamesRef = db.ref('userGames');
 
 // // Create and Deploy Your First Cloud Functions
@@ -35,22 +36,22 @@ exports.playerQueue = functions.database.ref('/players/{uid}').onCreate((snapsho
         });
     });
 
-    exports.moveQueue = functions.database.ref('/moves/{gameKey}/{uid}').onCreate((snapshot, contex) => {
+    exports.moveQueue = functions.database.ref('/moves/{gameKey}/{uid}').onCreate((snapshot, context) => {
       const { gameKey } = context.params;
 
-      const gamesMovesRef = snapshot.ref.parent;
+      const gamesMovesRef = movesRef.child(gameKey);
 
-      gamesMovesRef.once('value')
-        .value(snapshot => {
+      return gamesMovesRef.once('value')
+        .then(snapshot => {
           const game = snapshot.val();
           const moves = Object.keys(game)
             .map(key => ({
               uid: key,
-              play: game[key]
+              play: game[key] 
             }));
-            if(move.length < 2) return null;
+            if(moves.length < 2) return null;
 
-            const roundRef = gamesMovesRef.child(gameKey).child('rounds').push();
+            const roundRef = gamesRef.child(gameKey).child('rounds').push();
 
             return Promise.all([
               gamesMovesRef.remove(),

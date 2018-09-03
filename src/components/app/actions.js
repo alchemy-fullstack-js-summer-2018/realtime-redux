@@ -15,7 +15,7 @@ export const login = () => {
 
         userGamesRef.child(user.uid).on('value', snapshot => {
           dispatch({
-            type: GAMES_LOAD,
+            type: GAMES_LOAD, 
             payload: Object.keys(snapshot.val())
           });
         });
@@ -37,10 +37,11 @@ export const requestGame = () => {
   return (dispatch, getState) => {
     const user = getUser(getState());
     playersRef.child(user.uid).set(true)
-      .catch(console.log);
+      .catch(err => {
+        dispatch({
+          type: ERROR,
+          payload: err.message
+        });
+      });
   };
 };
-
-export const watchGames = uid => {
-  
-}

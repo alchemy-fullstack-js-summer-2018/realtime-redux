@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getGame } from './gameReducers';
 import { getUser } from '../app/reducers';
-import { loadGame, unloadGame } from './gameActions';
+import { loadGame, unloadGame, move } from './gameActions';
 
 class Game extends Component {
   static propTypes = {
@@ -24,12 +24,8 @@ class Game extends Component {
     unloadGame(match.params.gameKey); 
   }
 
-  handlePlay(play) {
-    
-  }
-
   render() { 
-    const { game, user } = this.props;
+    const { game, user, move } = this.props;
     if(!game || !user) return null;
 
     const { uid } = user;
@@ -46,20 +42,23 @@ class Game extends Component {
         </p>
 
         <ul>
-          {game.rounds && game.rounds.map((round, i) => (
-            <li key={i}>
-              {round.moves(move => (
-                <span key={move.uid}>{playerIdentifier(move.uid)}: {move.play}</span> 
-              ))}
-            </li>
-          ))}
+          {game.rounds && Object.keys(game.rounds).map((key, i) => {
+            const round = game.rounds[key];
+            return (
+              <li key={i}>
+                {round.moves.map(move => (
+                  <span key={move.uid}>{playerIdentifier(move.uid)}: {move.play}</span> 
+                ))}
+              </li>
+            );
+          })}
         </ul>
 
         <p>
           {['WATER', 'SPONGE', 'SCISSORS'].map(play => (
             <button 
               key={play}
-              onClick={() => this.handlePlay(play)}>
+              onClick={() => move  (play)}>
               {play}
             </button>
           ))}
@@ -74,5 +73,5 @@ export default connect(
     game: getGame(state),
     user: getUser(state)
   }),
-  { loadGame, unloadGame }
+  { loadGame, unloadGame, move }
 )(Game);
