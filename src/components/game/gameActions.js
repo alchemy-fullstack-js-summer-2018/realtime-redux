@@ -30,11 +30,5 @@ export const move = play => {
     const game = getGame(state);
     const user = getUser(state);
     movesRef.child(game.key).child(user.uid).set(play);
-    // .catch(err => {
-    //   dispatch({
-    //     type: ERROR,
-    //     payload: err.message
-    //   });
-    // });
   };
 };

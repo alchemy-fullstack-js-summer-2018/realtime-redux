@@ -10,6 +10,7 @@ class Game extends Component {
     match: PropTypes.object,
     game: PropTypes.object,
     user: PropTypes.object,
+    move: PropTypes.func.isRequired,
     loadGame: PropTypes.func.isRequired,
     unloadGame: PropTypes.func.isRequired
   };
@@ -46,9 +47,12 @@ class Game extends Component {
             const round = game.rounds[key];
             return (
               <li key={i}>
-                {round.moves.map(move => (
-                  <span key={move.uid}>{playerIdentifier(move.uid)}: {move.play}</span> 
-                ))}
+                <ul>
+                  {round.moves.map(move => (
+                    <li key={move.uid}>{playerIdentifier(move.uid)}: {move.play}</li> 
+                  ))}
+                  <li>Winner: {playerIdentifier(round.winner)}</li>
+                </ul>
               </li>
             );
           })}
