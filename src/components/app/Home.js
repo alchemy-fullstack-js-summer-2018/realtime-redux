@@ -36,11 +36,11 @@ export default connect(
 export const UserGames = ({ onRequest, games }) => {
   return (
     <section>
-      <button onClick={onRequest}>Play Game</button>
+      <button className="playgame" onClick={onRequest}>Create or Join a Game</button>
       <ul>
         {games.map((gameKey, i) => (
           <li key={gameKey}>
-            <Link to={`/games/${gameKey}`}>Game {i + 1}</Link>
+            <Link to={`/games/${gameKey}`}>Click to join Game {i + 1}</Link>
           </li>
         ))}
       </ul>

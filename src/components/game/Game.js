@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 import { getGame } from './reducers';
 import { getUser } from '../app/reducers';
 import { loadGame, unloadGame, move } from './actions';
+import rock from '../../assets/rock.png';
+import paper from '../../assets/paper.jpg';
+import scissors from '../../assets/scissors.png';
 
 class Game extends Component {
   static propTypes = {
@@ -30,15 +33,15 @@ class Game extends Component {
     if(!game || !user) return null;
 
     const { uid } = user;
-    const who = player => player === uid ? 'YOU' : 'THEM';
+    const who = player => player === uid ? 'You' : 'Some Other Player';
 
     const player1 = who(game.player1);
     const player2 = who(game.player2);
 
     return (
-      <section>
-        <h2>Players</h2>
-        <p>
+      <section id="gameplay">
+        <h2>Welcome to the Game!</h2>
+        <p id="gameheadline">
           {player1} vs {player2}
         </p>
 
@@ -51,7 +54,7 @@ class Game extends Component {
                   {round.moves.map(move => (
                     <li key={move.uid}>{who(move.uid)}: {move.play}</li>
                   ))}
-                  <li>winner: {who(round.winner)}</li>
+                  <li className="winner">Winner: {who(round.winner)}</li>
                 </ul>
               </li>
             );
@@ -59,7 +62,9 @@ class Game extends Component {
         </ul>
 
         <p>
-          {['ROCK', 'PAPER', 'SCISSORS'].map(play => (
+          <h2>Click on an Image to Play the Game!</h2>
+          {/* eslint-disable-next-line */}
+          {[<img src={rock} width="100" />, <img src={paper} width="100" height="100" />, <img src={scissors} width="100" height="100" />].map(play => (
             <button 
               key={play}
               onClick={() => move(play)}>
