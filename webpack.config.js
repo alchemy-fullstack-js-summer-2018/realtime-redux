@@ -2,6 +2,7 @@
 const { resolve } = require('path');
 const CleanPlugin = require('clean-webpack-plugin');
 const HtmlPlugin = require('html-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 // const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const buildDir = 'build';
@@ -18,6 +19,9 @@ module.exports = {
   },
   // mode (will eventually be cmd line arg in package.json scripts)
   mode: 'development',
+  node: {
+    fs: 'empty'
+  },
   devtool: 'inline-source-map',
   devServer: {
     contentBase: `./${buildDir}`,
@@ -27,6 +31,7 @@ module.exports = {
     // add plugins
     new CleanPlugin(`${path}/bundle.*.js`),
     new HtmlPlugin({ template: './src/index.html' }),
+    new Dotenv()
     // new CopyWebpackPlugin([{ from: './src/sprites', to: 'sprites' }])
   ],
   module: {
