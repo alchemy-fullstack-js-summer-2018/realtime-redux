@@ -1,28 +1,33 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getGame } from './gameReducers';
+import { getGame, getImages } from './gameReducers';
 import { getUser } from '../app/reducers';
-import { loadGame, unloadGame, move } from './gameActions';
+import { loadGame, unloadGame, move, loadImages } from './gameActions';
+// import images from '../../services/images';
+import styles from './Game.css';
 
 class Game extends Component {
   static propTypes = {
     match: PropTypes.object,
     game: PropTypes.object,
     user: PropTypes.object,
+    images: PropTypes.object,
     move: PropTypes.func.isRequired,
     loadGame: PropTypes.func.isRequired,
-    unloadGame: PropTypes.func.isRequired
+    unloadGame: PropTypes.func.isRequired,
+    loadImages: PropTypes.func.isRequired
   };
 
   componentDidMount() {
-    const { match, loadGame }  =  this.props;
-    loadGame(match.params.gameKey); 
+    const { match, loadGame, loadImages }  =  this.props;
+    loadGame(match.params.gameKey);
+    loadImages();
   }
   
   componentWillUnmount() {
     const { match, unloadGame }  =  this.props;
-    unloadGame(match.params.gameKey); 
+    unloadGame(match.params.gameKey);
   }
 
   render() { 
@@ -36,7 +41,7 @@ class Game extends Component {
     const player2 = playerIdentifier(game.player2);
 
     return (
-      <section>
+      <section className={styles.game}>
         <h2>Players</h2>
         <p>
           {player1} vs {player2}
@@ -58,15 +63,17 @@ class Game extends Component {
           })}
         </ul>
 
-        <p>
-          {['WATER', 'SPONGE', 'SCISSORS'].map(play => (
-            <button 
-              key={play}
-              onClick={() => move  (play)}>
-              {play}
-            </button>
-          ))}
-        </p>
+        <section>
+          <button onClick={() => move('GRASS')}>
+            <img src=''></img>
+          </button>
+          <button onClick={() => move('FIRE')}>
+            <img src="http://assets.pokemon.com/assets/cms2/img/pokedex/full/004.png"></img>
+          </button>
+          <button onClick={() => move('WATER')}>
+            <img src="http://assets.pokemon.com/assets/cms2/img/pokedex/full/007.png"></img>
+          </button>
+        </section>
       </section>
     );
   }
@@ -75,7 +82,8 @@ class Game extends Component {
 export default connect(
   state => ({
     game: getGame(state),
-    user: getUser(state)
+    user: getUser(state),
+    images: getImages(state)
   }),
-  { loadGame, unloadGame, move }
+  { loadGame, unloadGame, move, loadImages }
 )(Game);

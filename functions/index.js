@@ -70,8 +70,8 @@ exports.playerQueue = functions.database.ref('/players/{uid}').onCreate((snapsho
     };
 
     const isWinner = (play1, play2) => {
-      if(play1 === 'SCISSORS' && play2 === 'SPONGE') return true;
-      if(play1 === 'SPONGE' && play2 === 'WATER') return true;
-      if(play1 === 'WATER' && play2 === 'SCISSORS') return true;
+      if(play1 === 'FIRE' && play2 === 'GRASS') return true;
+      if(play1 === 'GRASS' && play2 === 'WATER') return true;
+      if(play1 === 'WATER' && play2 === 'FIRE') return true;
       return false;
     };

@@ -1,0 +1,16 @@
+:local(.game) {
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
+  
+  ul, li {
+    list-style: none;
+  }
+  button {
+    padding: 30px;
+    border: none;
+  }
+  img {
+    width: 150px;
+  }
+}

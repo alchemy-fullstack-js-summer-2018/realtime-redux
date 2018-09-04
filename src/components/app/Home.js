@@ -54,4 +54,4 @@ export const UserGames = ({ onRequest, games }) => {
 UserGames.propTypes = {
   games: PropTypes.array.isRequired,
   onRequest: PropTypes.func.isRequired
-}
+};

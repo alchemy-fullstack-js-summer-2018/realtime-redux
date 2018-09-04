@@ -1,6 +1,7 @@
-import { GAME_LOAD, getGame } from './gameReducers';
-import { getUser  } from '../app/reducers';
+import { GAME_LOAD, IMAGE_LOAD, getGame } from './gameReducers';
+import { getUser } from '../app/reducers';
 import { gamesRef, movesRef } from '../../services/firebaseRef';
+import { pokeImages } from '../../services/images';
 
 export const loadGame = gameKey => {
   return dispatch => {
@@ -24,6 +25,13 @@ export const unloadGame = gameKey => {
   };
 };
 
+export const loadImages = () => {
+  return {
+    type: IMAGE_LOAD,
+    payload: pokeImages
+  };
+};
+
 export const move = play => {
   return (dispatch, getState) => {
     const state = getState();
@@ -32,3 +40,5 @@ export const move = play => {
     movesRef.child(game.key).child(user.uid).set(play);
   };
 };
+
+// const image = () => images[Math.floor(Math.random() * (images.length))];
