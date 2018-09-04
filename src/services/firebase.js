@@ -1,5 +1,6 @@
 import firebase from 'firebase';
 require('dotenv').config();
+/* eslint-disable-next-line */
 const API_KEY = process.env.API_KEY;
 
 //grab the below info from the firebase console settings
