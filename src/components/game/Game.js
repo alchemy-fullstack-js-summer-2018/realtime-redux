@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { getGame, getImages } from './gameReducers';
 import { getUser } from '../app/reducers';
 import { loadGame, unloadGame, move, loadImages } from './gameActions';
-// import images from '../../services/images';
 import styles from './Game.css';
 
 class Game extends Component {
@@ -31,7 +30,7 @@ class Game extends Component {
   }
 
   render() { 
-    const { game, user, move } = this.props;
+    const { game, user, move, images } = this.props;
     if(!game || !user) return null;
 
     const { uid } = user;
@@ -40,12 +39,13 @@ class Game extends Component {
     const player1 = playerIdentifier(game.player1);
     const player2 = playerIdentifier(game.player2);
 
+    const { grass, fire, water } = images;
+
     return (
       <section className={styles.game}>
-        <h2>Players</h2>
-        <p>
-          {player1} vs {player2}
-        </p>
+        <h2>
+          {player1} <span>vs</span> {player2}
+        </h2>
 
         <ul>
           {game.rounds && Object.keys(game.rounds).map((key, i) => {
@@ -63,15 +63,15 @@ class Game extends Component {
           })}
         </ul>
 
-        <section>
-          <button onClick={() => move('GRASS')}>
-            <img src=''></img>
+        <section className="button-section">
+          <button className="grass" onClick={() => move('GRASS')}>
+            <img src={grass[Math.floor(Math.random() * (grass.length))]}></img>
           </button>
-          <button onClick={() => move('FIRE')}>
-            <img src="http://assets.pokemon.com/assets/cms2/img/pokedex/full/004.png"></img>
+          <button className="water" onClick={() => move('WATER')}>
+            <img src={water[Math.floor(Math.random() * (water.length))]}></img>
           </button>
-          <button onClick={() => move('WATER')}>
-            <img src="http://assets.pokemon.com/assets/cms2/img/pokedex/full/007.png"></img>
+          <button className="fire" onClick={() => move('FIRE')}>
+            <img src={fire[Math.floor(Math.random() * (fire.length))]}></img>
           </button>
         </section>
       </section>

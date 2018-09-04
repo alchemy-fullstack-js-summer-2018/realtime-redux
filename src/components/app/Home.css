@@ -1,0 +1,30 @@
+:local(.home) {
+  display: flex;
+  align-items: center;
+  align-content: center;
+justify-content: center;
+
+
+  .duel {
+    width: 200px;
+    height: 75px;
+    margin-top: 20px;
+    border-radius: 3px;
+    background-color: rgb(93, 0, 255);
+    color: white;
+    font-size: 1.25em;
+  }
+
+  .duel:hover {
+    width: 200px;
+    height: 75px;
+    border-radius: 3px;
+    background-color: rgb(123, 252, 31);
+    color: rgb(65, 65, 65);
+    font-size: 1.25em;
+  }
+
+  .game-link {
+    justify-self: flex-end;
+  }
+}

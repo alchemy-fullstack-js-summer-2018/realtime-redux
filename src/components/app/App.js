@@ -26,7 +26,7 @@ class App extends Component {
             <Header/>
           </header>
 
-          <main>
+          <main className="app-main">
             <Switch>
               <Route exact path="/" component={Home}/>
               <Route exact path="/games/:gameKey" component={Game}/>

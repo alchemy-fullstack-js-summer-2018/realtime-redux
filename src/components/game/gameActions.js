@@ -40,5 +40,3 @@ export const move = play => {
     movesRef.child(game.key).child(user.uid).set(play);
   };
 };
-
-// const image = () => images[Math.floor(Math.random() * (images.length))];

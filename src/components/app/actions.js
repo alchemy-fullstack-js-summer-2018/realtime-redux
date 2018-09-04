@@ -14,6 +14,7 @@ export const login = () => {
         });
 
         userGamesRef.child(user.uid).on('value', snapshot => {
+          if(!snapshot.val()) return null;
           dispatch({
             type: GAMES_LOAD, 
             payload: Object.keys(snapshot.val())

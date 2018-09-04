@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getUser, getGames } from './reducers';
 import { requestGame } from './actions';
+import styles from './Home.css';
+
 
 class Home extends Component {
 
@@ -16,11 +18,9 @@ class Home extends Component {
     const { user, games, requestGame } = this.props;
 
     return (
-      <div>
-        <h2>Play for a 33.333333% chance of winning!</h2>
+      <div className={styles.home}>
         { 
           user && <UserGames games={games} onRequest={requestGame}/>
-            
         }
       </div>
     );
@@ -39,7 +39,7 @@ export default connect(
 export const UserGames = ({ onRequest, games }) => {
   return (
     <section>
-      <button onClick={onRequest}>Duel</button>
+      <button className="duel" onClick={onRequest}>Duel</button>
       <ul>
         {games.map((gameKey, i) => (
           <li key={gameKey}>
