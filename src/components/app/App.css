@@ -1,0 +1,25 @@
+:local(.app) {
+  display: grid;
+  grid-template-rows: 150px 1fr;
+  height: 100vh;
+
+  ul, li {
+    list-style: none;
+  }
+
+  a {
+    color: white;
+    background-color: black;
+    text-decoration: none;
+    padding: 10px;
+  }
+  
+  main {
+    position: relative;
+  }
+
+  .app-main {
+    background-image: url('https://images.alphacoders.com/662/thumb-1920-662183.png');
+    background-repeat: no-repeat;
+  }
+}
